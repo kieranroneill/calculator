@@ -13,7 +13,7 @@ interface Scope {
     renderStub: SinonStub;
 }
 
-describe('index', () => {
+describe('src/index', () => {
     let scope: Scope;
 
     beforeEach(() => {

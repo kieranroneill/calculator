@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/Shell <Shell /> snapshots should match the snapshot with the default props 1`] = `
+<styled.div>
+  <h1>
+    Hello human
+  </h1>
+</styled.div>
+`;

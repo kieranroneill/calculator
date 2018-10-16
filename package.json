@@ -15,6 +15,7 @@
     "test": "jest --config=test/jest.config.js"
   },
   "dependencies": {
+    "@material-ui/core": "^3.2.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "styled-components": "^4.0.0"
@@ -26,6 +27,7 @@
     "@types/react-dom": "^16.0.9",
     "@types/react-router-dom": "^4.3.1",
     "@types/sinon": "^5.0.5",
+    "@types/styled-components": "^4.0.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
