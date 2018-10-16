@@ -1,0 +1,45 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "A basic calculator.",
+  "main": "src/index.ts",
+  "author": "Kieran O'Neill <kieranroneill@googlemail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kieranroneill/calculator.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "private": true,
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.1.14",
+    "@types/jest": "^23.3.5",
+    "@types/react": "^16.4.17",
+    "@types/react-dom": "^16.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.4",
+    "file-loader": "^2.0.0",
+    "handlebars-loader": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "jsdom": "^12.2.0",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.2.2",
+    "typescript": "^3.1.3",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9",
+    "webpack-notifier": "^1.7.0"
+  }
+}
