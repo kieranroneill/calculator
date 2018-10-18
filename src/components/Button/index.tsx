@@ -30,7 +30,7 @@ const StyledButton = styled<{ purpose: PurposeType }, 'button'>('button')`
       background-color: ${palette.primary.grey};
     }
   `}
-    ${props => props.purpose === 'result' && `
+    ${props => props.purpose === 'execute' && `
     background-color: ${palette.brand.green500};
     
     &:hover {
@@ -41,10 +41,11 @@ const StyledButton = styled<{ purpose: PurposeType }, 'button'>('button')`
 
 export type PurposeType = 'numeric'
     | 'operator'
-    | 'result';
+    | 'execute';
 
 export enum InputKeyEnum {
     Addition = '+',
+    Clear = 'AC',
     Decimal = '.',
     Division = '÷',
     Eight = '8',
@@ -62,18 +63,13 @@ export enum InputKeyEnum {
     Zero = '0',
 }
 
-export interface Props {
+export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     label: InputKeyEnum;
-    onClick: (key: InputKeyEnum) => void;
     purpose: PurposeType;
 }
 
 export const Button: React.SFC<Props> = (props: Props) => (
-    <StyledButton
-        onClick={() => props.onClick(props.label)}
-        purpose={props.purpose}
-
-    >
+    <StyledButton purpose={props.purpose}>
         {props.label}
     </StyledButton>
 );

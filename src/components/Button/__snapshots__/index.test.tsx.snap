@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/components/Button <Button /> snapshots should match the snapshot when the button is a result 1`] = `
+exports[`src/components/Button <Button /> snapshots should match the snapshot when the button is an executtion 1`] = `
 <styled.button
-  onClick={[Function]}
-  purpose="result"
+  purpose="execute"
 >
   +
 </styled.button>
@@ -11,7 +10,6 @@ exports[`src/components/Button <Button /> snapshots should match the snapshot wh
 
 exports[`src/components/Button <Button /> snapshots should match the snapshot when the button is an operator 1`] = `
 <styled.button
-  onClick={[Function]}
   purpose="operator"
 >
   +
@@ -20,7 +18,6 @@ exports[`src/components/Button <Button /> snapshots should match the snapshot wh
 
 exports[`src/components/Button <Button /> snapshots should match the snapshot with the default props 1`] = `
 <styled.button
-  onClick={[Function]}
   purpose="numeric"
 >
   +

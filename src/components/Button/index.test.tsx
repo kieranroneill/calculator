@@ -15,7 +15,6 @@ describe('src/components/Button', () => {
     beforeEach(() => {
         const props: Props = {
             label: InputKeyEnum.Addition,
-            onClick: jest.fn(),
             purpose: 'numeric',
         };
 
@@ -38,20 +37,12 @@ describe('src/components/Button', () => {
             expect(scope.wrapper).toMatchSnapshot();
         });
 
-        it('should match the snapshot when the button is a result', () => {
+        it('should match the snapshot when the button is an executtion', () => {
             scope.wrapper.setProps({
-                purpose: 'result',
+                purpose: 'execute',
             } as Props);
 
             expect(scope.wrapper).toMatchSnapshot();
-        });
-    });
-
-    describe('when clicking the button', () => {
-        it('should return the input', () => {
-            scope.wrapper.simulate('click');
-
-            expect(scope.props.onClick).toBeCalledWith(scope.props.label);
         });
     });
 });
