@@ -15,7 +15,6 @@
     "test": "jest --config=test/jest.config.js"
   },
   "dependencies": {
-    "@material-ui/core": "^3.2.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "styled-components": "^4.0.0"

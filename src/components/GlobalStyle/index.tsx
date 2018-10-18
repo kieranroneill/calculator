@@ -44,7 +44,7 @@ export const GlobalStyle:  GlobalStyleClass<void, void> = createGlobalStyle`
   h4,
   p,
   a {
-    color: ${palette.primary.black};
+    color: ${palette.primary.grey};
     font-weight: 400;
     margin: 0;
   }
@@ -76,7 +76,7 @@ export const GlobalStyle:  GlobalStyleClass<void, void> = createGlobalStyle`
     transition: all 250ms ease-in-out;
         
     &:hover {
-      color: ${palette.primary.grey};
+      color: ${palette.primary.lightGrey};
     }
   }
 `;
