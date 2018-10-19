@@ -69,7 +69,7 @@ export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: React.SFC<Props> = (props: Props) => (
-    <StyledButton purpose={props.purpose}>
+    <StyledButton {...props}>
         {props.label}
     </StyledButton>
 );

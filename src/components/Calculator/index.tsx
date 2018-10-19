@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 // Components.
-import {Button, InputKeyEnum} from '../Button';
+import {Button, InputKeyEnum, PurposeType} from '../Button';
 import {Display} from '../Display';
 // Styles.
 import palette from '../../styles/palette';
@@ -28,13 +28,7 @@ export interface State {
 export class Calculator extends React.PureComponent<{}, State> {
     public state: State;
 
-    private readonly onButtonClick: (key: InputKeyEnum) => (event: React.MouseEvent<HTMLButtonElement>) => void = (key: InputKeyEnum) => () => {
-        if (key === InputKeyEnum.Clear) {
-            return this.setState({
-                inputs: [],
-            });
-        }
-    };
+    private readonly onButtonClick: (key: InputKeyEnum, purpose: PurposeType) => (event: React.MouseEvent<HTMLButtonElement>) => void;
 
     constructor(props: {}) {
         super(props);
@@ -42,6 +36,42 @@ export class Calculator extends React.PureComponent<{}, State> {
         this.state = {
             inputs: [],
         };
+        this.onButtonClick = (key: InputKeyEnum, purpose: PurposeType) => () => {
+            const { inputs } = this.state;
+
+            if (key === InputKeyEnum.Clear) {
+                return this.setState({
+                    inputs: [],
+                });
+            }
+
+            if (purpose === 'numeric') {
+                return this.setState({
+                    inputs: [...inputs, key],
+                });
+            }
+
+            if (purpose === 'operator') {
+                if (inputs.length < 1) {
+                    return this.setState({
+                        inputs: [
+                            '0',
+                            key,
+                        ],
+                    });
+                }
+            }
+        };
+    }
+
+    private getButton(label: InputKeyEnum, purpose: PurposeType): React.ReactNode {
+        return (
+            <Button
+                label={label}
+                onClick={this.onButtonClick(label, purpose)}
+                purpose={purpose}
+            />
+        );
     }
 
     public render(): React.ReactElement<Calculator> {
@@ -50,102 +80,34 @@ export class Calculator extends React.PureComponent<{}, State> {
         return (
             <Wrapper>
                 <Card>
-                    <Display value={inputs.length > 0 ? inputs.join() : '0'} />
+                    <Display value={inputs.length > 0 ? inputs.join('') : '0'} />
                     <Keypad>
                         <KeypadRow>
-                            <Button
-                                label={InputKeyEnum.Clear}
-                                onClick={this.onButtonClick(InputKeyEnum.Clear)}
-                                purpose="execute"
-                            />
+                            {this.getButton(InputKeyEnum.Clear, 'execute')}
                         </KeypadRow>
                         <KeypadRow>
-                            <Button
-                                label={InputKeyEnum.Seven}
-                                onClick={this.onButtonClick(InputKeyEnum.Seven)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Eight}
-                                onClick={this.onButtonClick(InputKeyEnum.Eight)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Nine}
-                                onClick={this.onButtonClick(InputKeyEnum.Nine)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Division}
-                                onClick={this.onButtonClick(InputKeyEnum.Division)}
-                                purpose="operator"
-                            />
+                            {this.getButton(InputKeyEnum.Seven, 'numeric')}
+                            {this.getButton(InputKeyEnum.Eight, 'numeric')}
+                            {this.getButton(InputKeyEnum.Nine, 'numeric')}
+                            {this.getButton(InputKeyEnum.Division, 'operator')}
                         </KeypadRow>
                         <KeypadRow>
-                            <Button
-                                label={InputKeyEnum.Four}
-                                onClick={this.onButtonClick(InputKeyEnum.Four)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Five}
-                                onClick={this.onButtonClick(InputKeyEnum.Five)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Six}
-                                onClick={this.onButtonClick(InputKeyEnum.Six)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Multiplication}
-                                onClick={this.onButtonClick(InputKeyEnum.Multiplication)}
-                                purpose="operator"
-                            />
+                            {this.getButton(InputKeyEnum.Four, 'numeric')}
+                            {this.getButton(InputKeyEnum.Five, 'numeric')}
+                            {this.getButton(InputKeyEnum.Six, 'numeric')}
+                            {this.getButton(InputKeyEnum.Multiplication, 'operator')}
                         </KeypadRow>
                         <KeypadRow>
-                            <Button
-                                label={InputKeyEnum.One}
-                                onClick={this.onButtonClick(InputKeyEnum.One)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Two}
-                                onClick={this.onButtonClick(InputKeyEnum.Two)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Three}
-                                onClick={this.onButtonClick(InputKeyEnum.Three)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Subtraction}
-                                onClick={this.onButtonClick(InputKeyEnum.Subtraction)}
-                                purpose="operator"
-                            />
+                            {this.getButton(InputKeyEnum.One, 'numeric')}
+                            {this.getButton(InputKeyEnum.Two, 'numeric')}
+                            {this.getButton(InputKeyEnum.Three, 'numeric')}
+                            {this.getButton(InputKeyEnum.Subtraction, 'operator')}
                         </KeypadRow>
                         <KeypadRow>
-                            <Button
-                                label={InputKeyEnum.Zero}
-                                onClick={this.onButtonClick(InputKeyEnum.Zero)}
-                                purpose="numeric"
-                            />
-                            <Button
-                                label={InputKeyEnum.Decimal}
-                                onClick={this.onButtonClick(InputKeyEnum.Decimal)}
-                                purpose="operator"
-                            />
-                            <Button
-                                label={InputKeyEnum.Result}
-                                onClick={this.onButtonClick(InputKeyEnum.Result)}
-                                purpose="execute"
-                            />
-                            <Button
-                                label={InputKeyEnum.Addition}
-                                onClick={this.onButtonClick(InputKeyEnum.Addition)}
-                                purpose="operator"
-                            />
+                            {this.getButton(InputKeyEnum.Zero, 'numeric')}
+                            {this.getButton(InputKeyEnum.Decimal, 'operator')}
+                            {this.getButton(InputKeyEnum.Result, 'execute')}
+                            {this.getButton(InputKeyEnum.Addition, 'operator')}
                         </KeypadRow>
                     </Keypad>
                 </Card>
