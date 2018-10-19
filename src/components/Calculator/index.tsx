@@ -45,14 +45,8 @@ export class Calculator extends React.PureComponent<{}, State> {
                 });
             }
 
-            if (purpose === 'numeric') {
-                return this.setState({
-                    inputs: [...inputs, key],
-                });
-            }
-
             if (purpose === 'operator') {
-                if (inputs.length < 1) {
+                if (inputs.length < 1 && key !== InputKeyEnum.Subtraction) {
                     return this.setState({
                         inputs: [
                             '0',
@@ -61,6 +55,10 @@ export class Calculator extends React.PureComponent<{}, State> {
                     });
                 }
             }
+
+            return this.setState({
+                inputs: [...inputs, key],
+            });
         };
     }
 

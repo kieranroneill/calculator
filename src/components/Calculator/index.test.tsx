@@ -46,10 +46,16 @@ describe('src/components/Shell', () => {
             expect((scope.wrapper.state() as State).inputs).toEqual(['1']);
         });
 
-        it('should pad with a zero if an operator is the first digit', () => {
+        it('should pad with a zero if an operator, that is not a subtraction (negative), is the first digit', () => {
             findButtonByInput(scope.wrapper, InputKeyEnum.Addition).simulate('click');
 
             expect((scope.wrapper.state() as State).inputs).toEqual(['0', '+']);
+        });
+
+        it('should add the subtraction as the first digit', () => {
+            findButtonByInput(scope.wrapper, InputKeyEnum.Subtraction).simulate('click');
+
+            expect((scope.wrapper.state() as State).inputs).toEqual(['-']);
         });
     });
 });
