@@ -46,6 +46,7 @@ export class Calculator extends React.PureComponent<{}, State> {
             }
 
             if (purpose === 'operator') {
+                // Pad a zero, unless it is a negative number.
                 if (inputs.length < 1 && key !== InputKeyEnum.Subtraction) {
                     return this.setState({
                         inputs: [
@@ -53,6 +54,26 @@ export class Calculator extends React.PureComponent<{}, State> {
                             key,
                         ],
                     });
+                }
+
+                // Replace the operator.
+                if (
+                    (
+                        key === InputKeyEnum.Addition ||
+                        key === InputKeyEnum.Division ||
+                        key === InputKeyEnum.Multiplication
+                    ) &&
+                    (
+                        inputs[inputs.length - 1] === InputKeyEnum.Addition ||
+                        inputs[inputs.length - 1] === InputKeyEnum.Division ||
+                        inputs[inputs.length - 1] === InputKeyEnum.Multiplication
+                    )
+                ) {
+                    inputs.splice((inputs.length - 1), 1, key);
+
+                    return this.setState({
+                        inputs,
+                    }, this.forceUpdate); // Force update as we are a pure component and the render is shallow.
                 }
             }
 

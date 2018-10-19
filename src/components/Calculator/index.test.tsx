@@ -6,7 +6,7 @@ import { Calculator, State } from './';
 import { Button, InputKeyEnum } from '../Button';
 
 /**
- * Convenience function to get the Button by the input.
+ * Convenience function to find the Button by the input type.
  * @param parent the parent wrapper that contains the Button.
  * @param input the input to search for.
  * @returns the Button.
@@ -56,6 +56,26 @@ describe('src/components/Shell', () => {
             findButtonByInput(scope.wrapper, InputKeyEnum.Subtraction).simulate('click');
 
             expect((scope.wrapper.state() as State).inputs).toEqual(['-']);
+        });
+
+        it('should replace the division operator if the next operator is a multiplication', () => {
+            scope.wrapper.setState({
+                inputs: ['1', '÷'],
+            } as State);
+
+            findButtonByInput(scope.wrapper, InputKeyEnum.Multiplication).simulate('click');
+
+            expect((scope.wrapper.state() as State).inputs).toEqual(['1', '×']);
+        });
+
+        it('should replace the division operator if the next operator is a an addition', () => {
+            scope.wrapper.setState({
+                inputs: ['1', '÷'],
+            } as State);
+
+            findButtonByInput(scope.wrapper, InputKeyEnum.Addition).simulate('click');
+
+            expect((scope.wrapper.state() as State).inputs).toEqual(['1', '+']);
         });
     });
 });
