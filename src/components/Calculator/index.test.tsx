@@ -1,5 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
+import { assert, SinonSpy, spy } from 'sinon';
 
 // Components.
 import { Calculator, State } from './';
@@ -33,6 +34,34 @@ describe('src/components/Calculator', () => {
     });
 
     describe('when pressing the inputs', () => {
+        describe('when pressing a result', () => {
+            it('should not do anything if a result is already found', () => {
+                let setStateSpy: SinonSpy;
+
+                scope.wrapper.setState({
+                    inputs: [],
+                    result: '42',
+                } as State);
+
+                setStateSpy = spy(scope.wrapper.instance(), 'setState');
+
+                findButtonByInput(scope.wrapper, InputKeyEnum.Result).simulate('click');
+
+                assert.notCalled(setStateSpy);
+            });
+
+            it('should evaluate the inputs', () => {
+                scope.wrapper.setState({
+                    inputs: ['1', '+', '3'],
+                } as State);
+
+                findButtonByInput(scope.wrapper, InputKeyEnum.Result).simulate('click');
+
+                expect((scope.wrapper.state() as State).result).toBe('4'); // 1 + 3 = 5
+                expect((scope.wrapper.state() as State).inputs.length).toBe(0);
+            });
+        });
+
         describe('when clearing the inputs', () => {
             it('should remove all inputs when clearing', () => {
                 scope.wrapper.setState({

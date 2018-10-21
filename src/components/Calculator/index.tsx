@@ -8,6 +8,7 @@ import palette from '../../styles/palette';
 // Types.
 import {InputKeyEnum, PurposeType} from '../Button/types';
 // Utils.
+import evaluate from '../../utils/evaluate';
 import getPurpose from '../../utils/getPurpose';
 
 const Card = styled.div`
@@ -30,6 +31,7 @@ const Wrapper = styled.div`
 
 export interface State {
     inputs: InputKeyEnum[];
+    result?: string;
 }
 
 export class Calculator extends React.PureComponent<{}, State> {
@@ -44,11 +46,23 @@ export class Calculator extends React.PureComponent<{}, State> {
             inputs: [],
         };
         this.onButtonClick = (key: InputKeyEnum, purpose: PurposeType) => () => {
-            const { inputs } = this.state;
+            const { inputs, result } = this.state;
+
+            if (key === InputKeyEnum.Result) {
+                if (result) {
+                    return undefined;
+                }
+
+                return this.setState({
+                    inputs: [],
+                    result: evaluate(inputs),
+                });
+            }
 
             if (key === InputKeyEnum.Clear) {
                 return this.setState({
                     inputs: [],
+                    result: undefined,
                 });
             }
 
@@ -60,6 +74,7 @@ export class Calculator extends React.PureComponent<{}, State> {
                             InputKeyEnum.Zero,
                             key,
                         ],
+                        result: undefined,
                     });
                 }
 
@@ -85,6 +100,7 @@ export class Calculator extends React.PureComponent<{}, State> {
 
                     return this.setState({
                         inputs,
+                        result: undefined,
                     }, this.forceUpdate); // Force update as we are a pure component and we are performing a shallow render.
                 }
             }
@@ -96,6 +112,7 @@ export class Calculator extends React.PureComponent<{}, State> {
                             InputKeyEnum.Zero,
                             key,
                         ],
+                        result: undefined,
                     });
                 }
 
@@ -106,6 +123,7 @@ export class Calculator extends React.PureComponent<{}, State> {
 
             return this.setState({
                 inputs: [...inputs, key],
+                result: undefined,
             });
         };
     }
@@ -123,12 +141,12 @@ export class Calculator extends React.PureComponent<{}, State> {
     }
 
     public render(): React.ReactElement<Calculator> {
-        const { inputs } = this.state;
+        const { inputs, result } = this.state;
 
         return (
             <Wrapper>
                 <Card>
-                    <Display value={inputs.length > 0 ? inputs.join('') : '0'} />
+                    <Display value={result || (inputs.length > 0 ? inputs.join('') : '0')} />
                     <Keypad>
                         <KeypadRow>
                             {this.getButton(InputKeyEnum.Clear)}
