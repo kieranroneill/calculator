@@ -4,6 +4,9 @@ import styled from 'styled-components';
 // Styles.
 import palette from '../../styles/palette';
 
+// Types.
+import { InputKeyEnum, PurposeType } from './types';
+
 const StyledButton = styled<{ purpose: PurposeType }, 'button'>('button')`
   background: none;
   border: solid 1px ${palette.primary.grey};
@@ -39,37 +42,13 @@ const StyledButton = styled<{ purpose: PurposeType }, 'button'>('button')`
   `}
 `;
 
-export type PurposeType = 'numeric'
-    | 'operator'
-    | 'execute';
-
-export enum InputKeyEnum {
-    Addition = '+',
-    Clear = 'AC',
-    Decimal = '.',
-    Division = '÷',
-    Eight = '8',
-    Five = '5',
-    Four = '4',
-    Nine = '9',
-    Multiplication = '×',
-    One = '1',
-    Result = '=',
-    Seven = '7',
-    Six = '6',
-    Subtraction = '-',
-    Three = '3',
-    Two = '2',
-    Zero = '0',
-}
-
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     label: InputKeyEnum;
     purpose: PurposeType;
 }
 
 export const Button: React.SFC<Props> = (props: Props) => (
-    <StyledButton {...props}>
+    <StyledButton {...props }>
         {props.label}
     </StyledButton>
 );

@@ -2,7 +2,10 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 
 // Components.
-import { Button, InputKeyEnum, Props } from './';
+import { Button, Props } from './';
+
+// Types.
+import { InputKeyEnum } from './types';
 
 interface Scope {
     props: Props;

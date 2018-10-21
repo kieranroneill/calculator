@@ -1,10 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
 // Components.
-import {Button, InputKeyEnum, PurposeType} from '../Button';
+import {Button} from '../Button';
 import {Display} from '../Display';
 // Styles.
 import palette from '../../styles/palette';
+// Types.
+import {InputKeyEnum, PurposeType} from '../Button/types';
+// Utils.
+import getPurpose from '../../utils/getPurpose';
 
 const Card = styled.div`
   background-color: ${palette.primary.white};
@@ -22,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 export interface State {
-    inputs: string[];
+    inputs: InputKeyEnum[];
 }
 
 export class Calculator extends React.PureComponent<{}, State> {
@@ -50,13 +54,13 @@ export class Calculator extends React.PureComponent<{}, State> {
                 if (inputs.length < 1 && key !== InputKeyEnum.Subtraction) {
                     return this.setState({
                         inputs: [
-                            '0',
+                            InputKeyEnum.Zero,
                             key,
                         ],
                     });
                 }
 
-                if (inputs[inputs.length - 1] === InputKeyEnum.Subtraction) {
+                if (inputs[inputs.length - 1] === InputKeyEnum.Subtraction || inputs[inputs.length - 1] === InputKeyEnum.Decimal) {
                     return undefined;
                 }
 
@@ -82,13 +86,30 @@ export class Calculator extends React.PureComponent<{}, State> {
                 }
             }
 
+            if (key === InputKeyEnum.Decimal) {
+                if (inputs.length < 1) {
+                    return this.setState({
+                        inputs: [
+                            InputKeyEnum.Zero,
+                            key,
+                        ],
+                    });
+                }
+
+                if (getPurpose(inputs[inputs.length - 1]) !== 'numeric') {
+                    return undefined;
+                }
+            }
+
             return this.setState({
                 inputs: [...inputs, key],
             });
         };
     }
 
-    private getButton(label: InputKeyEnum, purpose: PurposeType): React.ReactNode {
+    private getButton(label: InputKeyEnum): React.ReactNode {
+        const purpose: PurposeType = getPurpose(label);
+
         return (
             <Button
                 label={label}
@@ -107,31 +128,31 @@ export class Calculator extends React.PureComponent<{}, State> {
                     <Display value={inputs.length > 0 ? inputs.join('') : '0'} />
                     <Keypad>
                         <KeypadRow>
-                            {this.getButton(InputKeyEnum.Clear, 'execute')}
+                            {this.getButton(InputKeyEnum.Clear)}
                         </KeypadRow>
                         <KeypadRow>
-                            {this.getButton(InputKeyEnum.Seven, 'numeric')}
-                            {this.getButton(InputKeyEnum.Eight, 'numeric')}
-                            {this.getButton(InputKeyEnum.Nine, 'numeric')}
-                            {this.getButton(InputKeyEnum.Division, 'operator')}
+                            {this.getButton(InputKeyEnum.Seven)}
+                            {this.getButton(InputKeyEnum.Eight)}
+                            {this.getButton(InputKeyEnum.Nine)}
+                            {this.getButton(InputKeyEnum.Division)}
                         </KeypadRow>
                         <KeypadRow>
-                            {this.getButton(InputKeyEnum.Four, 'numeric')}
-                            {this.getButton(InputKeyEnum.Five, 'numeric')}
-                            {this.getButton(InputKeyEnum.Six, 'numeric')}
-                            {this.getButton(InputKeyEnum.Multiplication, 'operator')}
+                            {this.getButton(InputKeyEnum.Four)}
+                            {this.getButton(InputKeyEnum.Five)}
+                            {this.getButton(InputKeyEnum.Six)}
+                            {this.getButton(InputKeyEnum.Multiplication)}
                         </KeypadRow>
                         <KeypadRow>
-                            {this.getButton(InputKeyEnum.One, 'numeric')}
-                            {this.getButton(InputKeyEnum.Two, 'numeric')}
-                            {this.getButton(InputKeyEnum.Three, 'numeric')}
-                            {this.getButton(InputKeyEnum.Subtraction, 'operator')}
+                            {this.getButton(InputKeyEnum.One)}
+                            {this.getButton(InputKeyEnum.Two)}
+                            {this.getButton(InputKeyEnum.Three)}
+                            {this.getButton(InputKeyEnum.Subtraction)}
                         </KeypadRow>
                         <KeypadRow>
-                            {this.getButton(InputKeyEnum.Zero, 'numeric')}
-                            {this.getButton(InputKeyEnum.Decimal, 'operator')}
-                            {this.getButton(InputKeyEnum.Result, 'execute')}
-                            {this.getButton(InputKeyEnum.Addition, 'operator')}
+                            {this.getButton(InputKeyEnum.Zero)}
+                            {this.getButton(InputKeyEnum.Decimal)}
+                            {this.getButton(InputKeyEnum.Result)}
+                            {this.getButton(InputKeyEnum.Addition)}
                         </KeypadRow>
                     </Keypad>
                 </Card>
