@@ -19,10 +19,13 @@ const Keypad = styled.div`
   padding: 0;
 `;
 const KeypadRow = styled.div`
+  display: flex;
   width: 100%;
+  text-align: right;
 `;
 const Wrapper = styled.div`
-  max-width: 500px;
+  margin: 2rem auto;
+  max-width: 400px;
 `;
 
 export interface State {

@@ -17,7 +17,7 @@ const StyledButton = styled<{ purpose: PurposeType }, 'button'>('button')`
   padding: 0;
   text-align: center;
   transition: 300ms;
-  width: 4rem;
+  width: 100%;
   
   ${props => props.purpose === 'numeric' && `
     background-color: ${palette.primary.white};
