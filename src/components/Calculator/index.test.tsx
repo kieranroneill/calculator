@@ -68,7 +68,7 @@ describe('src/components/Shell', () => {
             expect((scope.wrapper.state() as State).inputs).toEqual(['1', '×']);
         });
 
-        it('should replace the division operator if the next operator is a an addition', () => {
+        it('should replace the division operator if the next operator is an addition', () => {
             scope.wrapper.setState({
                 inputs: ['1', '÷'],
             } as State);
@@ -76,6 +76,26 @@ describe('src/components/Shell', () => {
             findButtonByInput(scope.wrapper, InputKeyEnum.Addition).simulate('click');
 
             expect((scope.wrapper.state() as State).inputs).toEqual(['1', '+']);
+        });
+
+        it('should not add the addition operator if the previous operator is a subtraction', () => {
+            scope.wrapper.setState({
+                inputs: ['1', '-'],
+            } as State);
+
+            findButtonByInput(scope.wrapper, InputKeyEnum.Division).simulate('click');
+
+            expect((scope.wrapper.state() as State).inputs).toEqual(['1', '-']);
+        });
+
+        it('should not add an operator if the previous operator is a subtraction', () => {
+            scope.wrapper.setState({
+                inputs: ['1', '+', '-'],
+            } as State);
+
+            findButtonByInput(scope.wrapper, InputKeyEnum.Division).simulate('click');
+
+            expect((scope.wrapper.state() as State).inputs).toEqual(['1', '+', '-']);
         });
     });
 });

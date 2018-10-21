@@ -56,6 +56,10 @@ export class Calculator extends React.PureComponent<{}, State> {
                     });
                 }
 
+                if (inputs[inputs.length - 1] === InputKeyEnum.Subtraction) {
+                    return undefined;
+                }
+
                 // Replace the operator.
                 if (
                     (
@@ -66,14 +70,15 @@ export class Calculator extends React.PureComponent<{}, State> {
                     (
                         inputs[inputs.length - 1] === InputKeyEnum.Addition ||
                         inputs[inputs.length - 1] === InputKeyEnum.Division ||
-                        inputs[inputs.length - 1] === InputKeyEnum.Multiplication
+                        inputs[inputs.length - 1] === InputKeyEnum.Multiplication ||
+                        inputs[inputs.length - 1] === InputKeyEnum.Subtraction
                     )
                 ) {
                     inputs.splice((inputs.length - 1), 1, key);
 
                     return this.setState({
                         inputs,
-                    }, this.forceUpdate); // Force update as we are a pure component and the render is shallow.
+                    }, this.forceUpdate); // Force update as we are a pure component and we are performing a shallow render.
                 }
             }
 
